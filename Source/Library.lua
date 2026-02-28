@@ -1,3 +1,9 @@
+--[[
+    scoot ui library
+    made by samet
+    modified by yellow
+]]
+
 if Library then
     Library:Unload()
 end
