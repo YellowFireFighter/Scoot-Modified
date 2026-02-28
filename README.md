@@ -2,5 +2,5 @@
 Scoot UI Library heavily modified
 
 
-Original by: Samet\n
-Modified by: Yellow
+Original by: Samet  
+Modified by: Yellow  
