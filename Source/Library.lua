@@ -649,124 +649,6 @@ local Library do
 
             return UIStroke
         end 
-
-        Instances.Tooltip = function(self, Data)
-            if not self.Instance then 
-                return
-            end
-
-            if Data.Text == nil then 
-                return
-            end
-
-            if type(Data.Text) ~= "string" then 
-                return
-            end
-
-            local Gui = self.Instance
-
-            local MouseLocation = UserInputService:GetMouseLocation()
-            local RenderStepped
-
-            local Items = { } do
-                Items["Tooltip"] = Instances:Create("Frame", {
-                    Parent = Library.Holder.Instance,
-                    Name = "\0",
-                    Size = UDim2New(0, 0, 0, 25),
-                    Position = UDim2New(0, Gui.AbsolutePosition.X, 0, Gui.AbsolutePosition.Y),
-                    BorderColor3 = FromRGB(12, 12, 12),
-                    BorderSizePixel = 2,
-                    AutomaticSize = Enum.AutomaticSize.XY,
-                    BackgroundTransparency = 1,
-                    BackgroundColor3 = FromRGB(14, 17, 15)
-                })  Items["Tooltip"]:AddToTheme({BackgroundColor3 = "Background", BorderColor3 = "Border"})
-
-                Items["UIStroke"] = Instances:Create("UIStroke", {
-                    Parent = Items["Tooltip"].Instance,
-                    Color = FromRGB(0, 0, 0),
-                    Thickness = 1,
-                    Transparency = 1,
-                    LineJoinMode = Enum.LineJoinMode.Miter
-                })  Items["UIStroke"]:AddToTheme({Color = "Outline"})
-
-                Instances:Create("UIPadding", {
-                    Parent = Items["Tooltip"].Instance,
-                    Name = "\0",
-                    PaddingTop = UDimNew(0, 5),
-                    PaddingBottom = UDimNew(0, 6),
-                    PaddingRight = UDimNew(0, 5),
-                    PaddingLeft = UDimNew(0, 5)
-                })
-
-                Items["Title"] = Instances:Create("TextLabel", {
-                    Parent = Items["Tooltip"].Instance,
-                    Name = "\0",
-                    FontFace = Library.Font,
-                    TextColor3 = FromRGB(202, 243, 255),
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    Text = Data.Text,
-                    BackgroundTransparency = 1,
-                    TextXAlignment = Enum.TextXAlignment.Left,
-                    TextTransparency = 1,
-                    BorderSizePixel = 0,
-                    AutomaticSize = Enum.AutomaticSize.XY,
-                    TextSize = 9,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
-                })  Items["Title"]:AddToTheme({TextColor3 = "Accent"})
-
-                Items["UIStroke2"] = Items["Title"]:TextBorder()
-                Items["UIStroke2"].Instance.Transparency = 1
-
-                Items["Description"] = Instances:Create("TextLabel", {
-                    Parent = Items["Tooltip"].Instance,
-                    Name = "\0",
-                    FontFace = Library.Font,
-                    TextColor3 = FromRGB(235, 235, 235),
-                    BorderColor3 = FromRGB(0, 0, 0),
-                    Text = Data.Description,
-                    Position = UDim2New(0, 0, 0, 15),
-                    BackgroundTransparency = 1,
-                    TextXAlignment = Enum.TextXAlignment.Left,
-                    BorderSizePixel = 0,
-                    TextTransparency = 1,
-                    AutomaticSize = Enum.AutomaticSize.XY,
-                    TextSize = 9,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
-                })  Items["Description"]:AddToTheme({TextColor3 = "Text"})
-
-                Items["UIStroke3"] = Items["Description"]:TextBorder()
-                Items["UIStroke3"].Instance.Transparency = 1
-            end
-
-            Library:Connect(Gui.MouseEnter, function()
-                Items["Tooltip"].Instance.Position = UDim2New(0, MouseLocation.X + 8, 0, MouseLocation.Y - 32)
-                Items["Tooltip"]:Tween(nil, {BackgroundTransparency = 0})
-                Items["Title"]:Tween(nil, {TextTransparency = 0})
-                Items["Description"]:Tween(nil, {TextTransparency = 0})
-                Items["UIStroke"]:Tween(nil, {Transparency = 0})
-                Items["UIStroke2"]:Tween(nil, {Transparency = 0})
-                Items["UIStroke3"]:Tween(nil, {Transparency = 0})
-
-                RenderStepped = RunService.RenderStepped:Connect(function()
-                    MouseLocation = UserInputService:GetMouseLocation()
-                    Items["Tooltip"]:Tween(nil, {Position = UDim2New(0, MouseLocation.X + 8, 0, MouseLocation.Y - 35)})
-                end)
-            end)
-
-            Library:Connect(Gui.MouseLeave, function()
-                Items["Tooltip"]:Tween(nil, {BackgroundTransparency = 1})
-                Items["Title"]:Tween(nil, {TextTransparency = 1})
-                Items["Description"]:Tween(nil, {TextTransparency = 1})
-                Items["UIStroke"]:Tween(nil, {Transparency = 1})
-                Items["UIStroke2"]:Tween(nil, {Transparency = 1})
-                Items["UIStroke3"]:Tween(nil, {Transparency = 1})
-
-                if RenderStepped then 
-                    RenderStepped:Disconnect()
-                    RenderStepped = nil
-                end
-            end)
-        end
     end
 
     -- Custom font
@@ -1718,7 +1600,8 @@ local Library do
                     Name = "\0",
                     BorderColor3 = FromRGB(0, 0, 0),
                     BackgroundTransparency = 1,
-                    Position = UDim2New(0, Items["Text"].Instance.TextBounds.X + 30, 0, 0),
+                    AnchorPoint = Vector2New(1, 0.5),
+                    Position = UDim2New(1, -3, 0.5, 0),
                     Size = UDim2New(0, 0, 1, 0),
                     BorderSizePixel = 0,
                     AutomaticSize = Enum.AutomaticSize.X,
@@ -1733,34 +1616,6 @@ local Library do
                     Padding = UDimNew(0, 6),
                     SortOrder = Enum.SortOrder.LayoutOrder
                 })
-
-                if Data.Tooltip then
-                    Items["TooltipThing"] = Instances:Create("TextLabel", {
-                        Parent = Items["SubElements"].Instance,
-                        Name = "\0",
-                        FontFace = Library.Font,
-                        TextColor3 = FromRGB(235, 235, 235),
-                        BorderColor3 = FromRGB(0, 0, 0),
-                        Text = "(?)",
-                        Size = UDim2New(0, 0, 0, 15),
-                        AnchorPoint = Vector2New(0, 0.5),
-                        Position = UDim2New(0, 22, 0.5, 0),
-                        BackgroundTransparency = 1,
-                        TextTransparency = 0.4,
-                        TextXAlignment = Enum.TextXAlignment.Left,
-                        BorderSizePixel = 0,
-                        AutomaticSize = Enum.AutomaticSize.X,
-                        TextSize = 9,
-                        BackgroundColor3 = FromRGB(255, 255, 255)
-                    })  Items["TooltipThing"]:AddToTheme({TextColor3 = "Text"})
-
-                    Items["TooltipThing"]:TextBorder()
-
-                    Items["TooltipThing"]:Tooltip({
-                        Text = Data.Tooltip.Name,
-                        Description = Data.Tooltip.Description
-                    })
-                end
             end
             
             function Toggle:Get()
@@ -1773,24 +1628,26 @@ local Library do
             end
 
             function Toggle:Set(Value)
-                Toggle.Value = Value 
-                Library.Flags[Toggle.Flag] = Value 
+                task.spawn(function()
+                    Toggle.Value = Value 
+                    Library.Flags[Toggle.Flag] = Value 
 
-                if Toggle.Value then
-                    Items["Indicator"]:ChangeItemTheme({BackgroundColor3 = "Accent", BorderColor3 = "Border"})
-                    Items["Indicator"]:Tween(nil, {BackgroundColor3 = Library.Theme.Accent})
-                    task.wait(0.05)
-                    Items["Check"]:Tween(TweenInfo.new(Library.Tween.Time, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {ImageTransparency = 0, Size = UDim2New(1, 2, 1, 2)})
-                else
-                    Items["Indicator"]:ChangeItemTheme({BackgroundColor3 = "Element", BorderColor3 = "Border"})
-                    Items["Indicator"]:Tween(nil, {BackgroundColor3 = Library.Theme.Element})
-                    task.wait(0.05)
-                    Items["Check"]:Tween(TweenInfo.new(Library.Tween.Time, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {ImageTransparency = 1, Size = UDim2New(0, 0, 0, 0)})
-                end
+                    if Toggle.Value then
+                        Items["Indicator"]:ChangeItemTheme({BackgroundColor3 = "Accent", BorderColor3 = "Border"})
+                        Items["Indicator"]:Tween(nil, {BackgroundColor3 = Library.Theme.Accent})
+                        task.wait(0.05)
+                        Items["Check"]:Tween(TweenInfo.new(Library.Tween.Time, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {ImageTransparency = 0, Size = UDim2New(1, 2, 1, 2)})
+                    else
+                        Items["Indicator"]:ChangeItemTheme({BackgroundColor3 = "Element", BorderColor3 = "Border"})
+                        Items["Indicator"]:Tween(nil, {BackgroundColor3 = Library.Theme.Element})
+                        task.wait(0.05)
+                        Items["Check"]:Tween(TweenInfo.new(Library.Tween.Time, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {ImageTransparency = 1, Size = UDim2New(0, 0, 0, 0)})
+                    end
 
-                if Data.Callback then 
-                    Library:SafeCall(Data.Callback, Toggle.Value)
-                end
+                    if Data.Callback then 
+                        Library:SafeCall(Data.Callback, Toggle.Value)
+                    end
+                end)
             end
 
             function Toggle:SetVisibility(Bool)
@@ -5996,7 +5853,6 @@ local Library do
             Section = self,
 
             Name = Data.Name or Data.name or "Toggle",
-            Tooltip = Data.ToolTip or Data.tooltip or nil,
             Flag = Data.Flag or Data.flag or Library:NextFlag(),
             Default = Data.Default or Data.default or false,
             Callback = Data.Callback or Data.callback or function() end
@@ -6005,7 +5861,6 @@ local Library do
         local NewToggle, ToggleItems = Components:Toggle({
             Name = Toggle.Name,
             Parent = Toggle.Section.Items["Content"],
-            Tooltip = Toggle.Tooltip,
             Flag = Toggle.Flag,
             Default = Toggle.Default,
             Page = Toggle.Page,
@@ -6013,62 +5868,62 @@ local Library do
         })
 
         function NewToggle:Colorpicker(Data)
-                local Colorpicker = {
-                    Window = self.Window,
-                    Page = self.Page,
-                    Section = self,
+            local Colorpicker = {
+                Window = self.Window,
+                Page = self.Page,
+                Section = self,
 
-                    Flag = Data.Flag or Data.flag or Library:NextFlag(),
-                    Default = Data.Default or Data.default or Color3.fromRGB(255, 255, 255),
-                    Callback = Data.Callback or Data.callback or function() end,
-                    Alpha = Data.Alpha or Data.alpha or 0,
-                }
+                Flag = Data.Flag or Data.flag or Library:NextFlag(),
+                Default = Data.Default or Data.default or Color3.fromRGB(255, 255, 255),
+                Callback = Data.Callback or Data.callback or function() end,
+                Alpha = Data.Alpha or Data.alpha or 0,
+            }
 
-                local NewColorpicker, ColorpickerItems = Components:Colorpicker({
-                    Name = Colorpicker.Name,
-                    Parent = ToggleItems["SubElements"],
-                    Pages = true,
-                    Page = Colorpicker.Page,
-                    Flag = Colorpicker.Flag,
-                    Default = Colorpicker.Default,
-                    Alpha = Colorpicker.Alpha,
-                    Callback = Colorpicker.Callback,
-                })
+            local NewColorpicker, ColorpickerItems = Components:Colorpicker({
+                Name = Colorpicker.Name,
+                Parent = ToggleItems["SubElements"],
+                Pages = true,
+                Page = Colorpicker.Page,
+                Flag = Colorpicker.Flag,
+                Default = Colorpicker.Default,
+                Alpha = Colorpicker.Alpha,
+                Callback = Colorpicker.Callback,
+            })
 
-                return NewColorpicker
+            return NewColorpicker
         end
 
         function NewToggle:Keybind(Data)
-                Data = Data or { }
+            Data = Data or { }
 
-                local Keybind = {
-                    Window = self.Window,
-                    Page = self.Page,
-                    Section = self.Section,
+            local Keybind = {
+                Window = self.Window,
+                Page = self.Page,
+                Section = self.Section,
 
-                    Flag = Data.Flag or Data.flag or Library:NextFlag(),
-                    Default = Data.Default or Data.default or Enum.KeyCode.RightShift,
-                    Callback = Data.Callback or Data.callback or function() end,
-                    Mode = Data.Mode or Data.mode or "Toggle",
-                }
+                Flag = Data.Flag or Data.flag or Library:NextFlag(),
+                Default = Data.Default or Data.default or Enum.KeyCode.RightShift,
+                Callback = Data.Callback or Data.callback or function() end,
+                Mode = Data.Mode or Data.mode or "Toggle",
+            }
 
-                local NewKeybind, KeybindItems = Components:Keybind({
-                    Name = Toggle.Name,
-                    Parent = ToggleItems["SubElements"],
-                    Page = Keybind.Page,
-                    Flag = Keybind.Flag,
-                    Default = Keybind.Default,
-                    Mode = Keybind.Mode,
-                    Callback = Keybind.Callback
-                })
+            local NewKeybind, KeybindItems = Components:Keybind({
+                Name = Toggle.Name,
+                Parent = ToggleItems["SubElements"],
+                Page = Keybind.Page,
+                Flag = Keybind.Flag,
+                Default = Keybind.Default,
+                Mode = Keybind.Mode,
+                Callback = Keybind.Callback
+            })
 
-                return NewKeybind
+            return NewKeybind
         end
 
         return NewToggle
     end
 
-        Library.Sections.Button = function(self)
+    Library.Sections.Button = function(self)
         local Button = {
             Window = self.Window,
             Page = self.Page,
@@ -6096,7 +5951,6 @@ local Library do
             Min = Data.Min or Data.min or 0,
             Decimals = Data.Decimals or Data.decimals or 1,
             Suffix = Data.Suffix or Data.suffix or "",
-            ToolTip = Data.ToolTip or Data.tooltip or nil,
             Max = Data.Max or Data.max or 100,
             Default = Data.Default or Data.Default or 0,
             Callback = Data.Callback or Data.callback or function() end,
@@ -6114,13 +5968,6 @@ local Library do
             Default = Slider.Default,
             Callback = Slider.Callback,
         })
-
-        if Slider.ToolTip then
-            SliderItems["Slider"]:Tooltip({
-                Text = Slider.ToolTip.Name,
-                Description = Slider.ToolTip.Description,
-            })
-        end
 
         local PageSearchData = Library.SearchItems[Slider.Page]
 
@@ -6148,7 +5995,6 @@ local Library do
             Flag = Data.Flag or Data.flag or Library:NextFlag(),
             Items = Data.Items or Data.items or { },
             Default = Data.Default or Data.default or nil,
-            ToolTip = Data.ToolTip or Data.tooltip or nil,
             Multi = Data.Multi or Data.multi or false,
             Callback = Data.Callback or Data.callback or function() end            
         }
@@ -6164,13 +6010,6 @@ local Library do
             Callback = Dropdown.Callback,
         })
 
-        if Dropdown.ToolTip then
-            DropdownItems["Dropdown"]:Tooltip({
-                Text = Dropdown.ToolTip.Name,
-                Description = Dropdown.ToolTip.Description,
-            })
-        end
-
         local PageSearchData = Library.SearchItems[Dropdown.Page]
 
         if PageSearchData then
@@ -6185,7 +6024,7 @@ local Library do
         return NewDropdown 
     end
 
-    Library.Sections.Label = function(self, Name, Tooltip)
+    Library.Sections.Label = function(self, Name)
         local Label = {
             Window = self.Window,
             Page = self.Page,
@@ -6199,13 +6038,6 @@ local Library do
             Parent = Label.Section.Items["Content"],
             Page = Label.Page,
         })
-
-        if Tooltip then
-            LabelItems["Label"]:Tooltip({
-                Text = Tooltip.Name,
-                Description = Tooltip.Description,
-            })
-        end
 
         function NewLabel:Colorpicker(Data)
             Data = Data or { }
@@ -6290,7 +6122,6 @@ local Library do
             Numeric = Data.Numeric or Data.numeric or false,
             Finished = Data.Finished or Data.finished or false,
             Placeholder = Data.Placeholder or Data.placeholder or "...",
-            ToolTip = Data.ToolTip or Data.tooltip or nil,
             Callback = Data.Callback or Data.callback or function() end,
         }
 
@@ -6305,13 +6136,6 @@ local Library do
             Finished = Textbox.Finished,
             Callback = Textbox.Callback,
         })
-
-        if Textbox.ToolTip then
-            TextboxItems["Textbox"]:Tooltip({
-                Text = Textbox.ToolTip.Name,
-                Description = Textbox.ToolTip.Description
-            })
-        end
 
         local PageSearchData = Library.SearchItems[Textbox.Page]
 
