@@ -1,4 +1,4 @@
-local Library = loadstring(readfile("https://raw.githubusercontent.com/YellowFireFighter/Scoot-Modified/refs/heads/main/Source/Library.lua"))()
+local Library = loadstring(request({Url = "https://raw.githubusercontent.com/YellowFireFighter/Scoot-Modified/refs/heads/main/Source/Library.lua", Method = "Get"}).Body)()
 
 local Window = Library:Window({
     Logo = "77218680285262",
