@@ -10,6 +10,8 @@ end
 
 local LoadTick = os.clock()
 
+local uid = _G.__cw_uid or 0
+
 local Library do
     local Workspace = game:GetService("Workspace")
     local UserInputService = game:GetService("UserInputService")
