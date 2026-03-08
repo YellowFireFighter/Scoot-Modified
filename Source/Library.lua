@@ -700,11 +700,12 @@ local Library do
     })
 
     Library.Modal = Instances:Create("TextButton", {
+        Parent = Library.Holder.Instance,
         Name = "\0",
         Text = "",
         BackgroundTransparency = 0,
         TextTransparency = 0,
-        Visible = false,
+        Visible = true,
         Modal = true
     })
 
@@ -5700,7 +5701,7 @@ local Library do
         Library:Connect(UserInputService.InputBegan, function(Input)
             if tostring(Input.KeyCode) == Library.MenuKeybind or tostring(Input.UserInputType) == Library.MenuKeybind then
                 Window:SetOpen(not Window.IsOpen)
-                Library.Modal.Visible = not Window.IsOpen
+                self.Modal.Instance.Visible = not Window.IsOpen
             end
         end)
 
