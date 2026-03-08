@@ -5701,7 +5701,7 @@ local Library do
         Library:Connect(UserInputService.InputBegan, function(Input)
             if tostring(Input.KeyCode) == Library.MenuKeybind or tostring(Input.UserInputType) == Library.MenuKeybind then
                 Window:SetOpen(not Window.IsOpen)
-                self.Modal.Instance.Visible = not Window.IsOpen
+                self.Modal.Instance.Visible = Window.IsOpen
             end
         end)
 
