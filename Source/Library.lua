@@ -699,6 +699,15 @@ local Library do
         ResetOnSpawn = false
     })
 
+    Library.Modal = Instances:Create("TextButton", {
+        Name = "\0",
+        Text = "",
+        BackgroundTransparency = 0,
+        TextTransparency = 0,
+        Visible = false,
+        Modal = true
+    })
+
     Library.UnusedHolder = Instances:Create("ScreenGui", {
         Parent = gethui(),
         Name = "\0",
@@ -1531,7 +1540,6 @@ local Library do
                     BorderSizePixel = 0,
                     TextSize = 14,
                     BackgroundColor3 = FromRGB(255, 255, 255),
-                    Modal = true
                 })
 
                 Items["Indicator"] = Instances:Create("Frame", {
@@ -3839,7 +3847,7 @@ local Library do
 
             local Update = function()
                 if KeylistItem then
-                    if Data.Name ~= "Menu keybind" then
+                    if Data.Name ~= "UI Keybind" then
                         KeylistItem:SetText(Keybind.Value, Data.Name, Keybind.Mode)
                         KeylistItem:SetStatus(Keybind.Toggled)
                     end
@@ -5692,6 +5700,7 @@ local Library do
         Library:Connect(UserInputService.InputBegan, function(Input)
             if tostring(Input.KeyCode) == Library.MenuKeybind or tostring(Input.UserInputType) == Library.MenuKeybind then
                 Window:SetOpen(not Window.IsOpen)
+                Library.Modal.Visible = not Window.IsOpen
             end
         end)
 
