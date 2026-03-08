@@ -1530,7 +1530,8 @@ local Library do
                     Size = UDim2New(1, 0, 0, 12),
                     BorderSizePixel = 0,
                     TextSize = 14,
-                    BackgroundColor3 = FromRGB(255, 255, 255)
+                    BackgroundColor3 = FromRGB(255, 255, 255),
+                    Modal = true
                 })
 
                 Items["Indicator"] = Instances:Create("Frame", {
@@ -3838,8 +3839,10 @@ local Library do
 
             local Update = function()
                 if KeylistItem then
-                    KeylistItem:SetText(Keybind.Value, Data.Name, Keybind.Mode)
-                    KeylistItem:SetStatus(Keybind.Toggled)
+                    if Data.Name ~= "Menu keybind" then
+                        KeylistItem:SetText(Keybind.Value, Data.Name, Keybind.Mode)
+                        KeylistItem:SetStatus(Keybind.Toggled)
+                    end
                 end
             end
 
