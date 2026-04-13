@@ -84,7 +84,7 @@ local Library do
             Directory = "CrumblewareV7",
             Configs = "CrumblewareV7/" .. game.GameId,
             Assets = "CrumblewareV7/Assets",
-        }
+        },
 
         Images = {
             ["Saturation"] = {"Saturation.png", "https://github.com/sametexe001/images/blob/main/saturation.png?raw=true" },
