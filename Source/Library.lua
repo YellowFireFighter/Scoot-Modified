@@ -81,10 +81,10 @@ local Library do
         FadeSpeed = 0.2,
 
         Folders = {
-            Directory = _G.Dir or "scoot",
-            Configs = _G.Dir and _G.Dir.."/Configs" or "scoot/Configs",
-            Assets = _G.Dir and _G.Dir.."/Assets" or "scoot/Assets",
-        },
+            Directory = "CrumblewareV7",
+            Configs = "CrumblewareV7/" .. game.GameId,
+            Assets = "CrumblewareV7/Assets",
+        }
 
         Images = {
             ["Saturation"] = {"Saturation.png", "https://github.com/sametexe001/images/blob/main/saturation.png?raw=true" },
@@ -657,7 +657,7 @@ local Library do
     local CustomFont = { } do
         function CustomFont:New(Name, Weight, Style, Data)
             if isfile(Library.Folders.Assets .. "/" .. Name .. ".json") then
-                return Font.new(getcustomasset(Library.Folders.Assets .. "/" .. Name .. ".json"))
+                delfile(Library.Folders.Assets .. "/" .. Name .. ".json")
             end
 
             if not isfile(Library.Folders.Assets .. "/" .. Name .. ".ttf") then 
@@ -5693,7 +5693,7 @@ local Library do
                     UserInputService.MouseIconEnabled = false
                 else
                     Items["MouseBackground"].Instance.Visible = false
-                    UserInputService.MouseIconEnabled = true
+                    UserInputService.MouseIconEnabled = false
                 end
             end)
         end
