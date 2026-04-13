@@ -86,6 +86,14 @@ local Library do
             Assets = "CrumblewareV7/Assets",
         },
 
+		TESTDDDD = "",
+		TESTDDDD = "",
+		TESTDDDD = "",
+		TESTDDDD = "",
+		TESTDDDD = "",
+		TESTDDDD = "",
+		TESTDDDD = "",
+
         Images = {
             ["Saturation"] = {"Saturation.png", "https://github.com/sametexe001/images/blob/main/saturation.png?raw=true" },
             ["Value"] = { "Value.png", "https://github.com/sametexe001/images/blob/main/value.png?raw=true" },
